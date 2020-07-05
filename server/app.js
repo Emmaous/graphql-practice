@@ -2,7 +2,14 @@ const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const schema = require('./schema/schema');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
+const app = express();
+
+//allow cross origin requests
+app.use(cors());
+
+//connect to mlab database
 mongoose .connect(
     "mongodb+srv://Avatah:blue2583@graphql-avatah-upcfd.mongodb.net/<dbname>?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true }
@@ -10,7 +17,8 @@ mongoose .connect(
    .then(() => console.log("Connected to MongoDB Atlas"))
    .catch(err => console.log("Error: ", err.message));
 
-const app = express();
+   
+
 
 app.use('/graphql',graphqlHTTP({
     schema,
